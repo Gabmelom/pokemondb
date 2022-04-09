@@ -1,0 +1,17 @@
+nav.navbar.navbar-expand-lg.bg-dark.navbar-dark
+    .container
+        a.navbar-brand(href="/")
+            i.bi.bi-house-fill.mx-2
+            span.font-weight-bold Home
+        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+
+        div.collapse.navbar-collapse(id="navmenu")
+            ul.navbar-nav.ms-auto
+                li.nav-item
+                    a.nav-link(href="/regions") Regions
+                li.nav-item
+                    a.nav-link(href="/poke-search") Pokemon
+                li.nav-item
+                    a.nav-link(href="/move-search") Moves
+include ./bootstrap-js

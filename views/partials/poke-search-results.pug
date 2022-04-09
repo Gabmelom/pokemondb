@@ -1,0 +1,19 @@
+.position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
+    h1.display-6.fw-normal Results
+    .row.pt-3
+        .col-sm-4
+            ul(style="list-style-type: none") 
+                - let i;
+                - for (i=0; i<results.length/3; i++)
+                    li
+                        a(href='/pokemon/'+results[i].pokemon_id) #{results[i].pokemon_id} - #{results[i].pokemon_name} 
+        .col-sm-4
+            ul(style="list-style-type: none")
+                - for (i=i; i<2*results.length/3; i++)
+                    li
+                        a(href='/pokemon/'+results[i].pokemon_id) #{results[i].pokemon_id} - #{results[i].pokemon_name} 
+        .col-sm-4
+            ul(style="list-style-type: none")
+                - for (i=i; i<results.length; i++)
+                    li
+                        a(href='/pokemon/'+results[i].pokemon_id) #{results[i].pokemon_id} - #{results[i].pokemon_name} 
