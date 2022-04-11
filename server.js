@@ -1,5 +1,4 @@
 require('dotenv').config();
-// Modules
 const path = require('path')
 const express = require('express');
 const Database = require('better-sqlite3');
@@ -16,6 +15,7 @@ app.use(express.static('public'));
 
 app.get('/', (_,res) =>{ res.render('index') });
 app.get('/poke-search', (_,res) =>{ res.render('poke-search') });
+app.get('/move-search', (_,res) =>{ res.render('move-search') });
 
 app.get('/pokemon', (req,res) =>{
     if(req.query){
@@ -55,12 +55,42 @@ app.get('/pokemon/:id', (req,res) =>{
     const pokemon = query.get(req.params.id);
     res.send(pokemon);
 });
+
 app.get('/pokemon/:id/stats', (req,res) =>{
     const query = db.prepare('SELECT stat_name,base_stat FROM pokemon NATURAL JOIN pokemon_stats WHERE pokemon_id=?');
     const pokemon = query.all(req.params.id);
     res.send(pokemon);
 });
 
+app.get('/moves', (req,res) =>{
+    // if(req.query){
+        
+    //     const query = db.prepare('')
+    //     const moves = query.all(binding);
+    //     return res.render(path.join("partials","move-search-results"),{results:moves});
+    // }
+    const query = db.prepare('SELECT * FROM moves');
+    const moves = query.all();
+    return res.render(path.join("partials","move-search-results"),{results:moves});
+});
+
+app.get('/regions', (_,res) =>{
+    const query = db.prepare('SELECT * FROM regions');
+    const regions = query.all();
+    res.render('regions', {regions});
+});
+
+app.get('/regions/:name', (req,res) =>{
+    const query = db.prepare('SELECT * FROM locations WHERE region_name=?');
+    const locations = query.all(req.params.name);
+    res.render('region', {region:req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1), locations:locations});
+});
+
+app.get('/locations/:name/encounters' ,(req,res) =>{
+    const query = db.prepare('SELECT * FROM encounters NATURAL JOIN pokemon NATURAL JOIN subareas NATURAL JOIN locations WHERE location_id=?');
+    const encounters = query.all(req.params.name);
+    res.render('encounters.pug', {encounters:encounters});
+});
 
 app.listen(PORT, ()=> console.log(`Server running - http://localhost:${PORT}`))
 

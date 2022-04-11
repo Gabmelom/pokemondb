@@ -1,0 +1,41 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Regions
+        include ./partials/bootstrap-style
+    body 
+        include ./partials/header
+        .container 
+            .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
+                h1.display-4.fw-normal Explore the Pokémon Regions
+            each r in regions
+                .row.justify-content-center
+                    .col-sm-6.d-flex.flex-wrap.align-items-center.justify-content-center
+                        h3.font-weight-light.text-capitalize.py-2.d-inline-block
+                            a(href=`/regions/${r.region_name}`) #{r.region_name}
+                        - if(r.region_name == "kanto")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/1.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/4.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/7.png")
+                        - if(r.region_name == "johto")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/152.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/155.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/158.png")
+                        - if(r.region_name == "hoenn")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/252.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/255.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/258.png")
+                        - if(r.region_name == "sinnoh")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/387.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/390.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/393.png")
+                        - if(r.region_name == "unova")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/495.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/498.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/501.png")
+                        - if(r.region_name == "kalos")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/650.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/653.png")
+                            img.pb-3.d-inline-block(src="/images/poke-icons/656.png")

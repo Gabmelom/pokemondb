@@ -1,0 +1,39 @@
+mixin encounter_row(obj)
+    tr 
+        th(scope="row").text-capitalize 
+            a(href=`/pokemon/${obj.pokemon_id}`) #{obj.pokemon_name}
+        td #{obj.min_level}
+        td #{obj.max_level}
+        td.text-capitalize #{obj.subarea_name?obj.subarea_name:"Overworld"}
+        td
+            img(src=`/images/poke-icons/${obj.pokemon_id}.png`)
+
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Encounters
+        include ./partials/bootstrap-style
+    body 
+        include ./partials/header
+        .container 
+            .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
+                h1.display-4.fw-normal Pokémon encounters
+            .ml-1.mb-3.row.justify-content-center
+                if encounters.length > 0
+                    h3.text-secondary.text-capitalize #{encounters[0].location_name}
+                else 
+                    h3.text-secondary.text-capitalize There are no encounters for this area
+            .row-12
+                table.table.table-hover
+                    thead.thead-light
+                        tr
+                            th(scope="col") Pokémon
+                            th(scope="col") Min level
+                            th(scope="col") Max level
+                            th(scope="col") Subarea
+                            th(scope="col") Sprite
+                    tbody
+                        each e in encounters
+                            +encounter_row(e)

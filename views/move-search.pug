@@ -13,40 +13,32 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Pokémon Search
+        title Move Search
         include ./partials/bootstrap-style
     body 
         include ./partials/header
-        script(src="/js/poke-search.js" defer) 
+        script(src="/js/move-search.js" defer) 
         .container 
             .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
-                h1.display-4.fw-normal Search for Pokémon
+                h1.display-4.fw-normal Search for Moves
             .ml-1.mb-3.row
                 p.text-muted Basic information
             .ml-1.mb-3.row
                 label(for="name").col-sm-1.col-form-label Name 
                 .col-sm-5 
                     input#name(type="text").form-control
-            .ml-1.mb-3.row
-                label(for="type1").col-sm-1.col-form-label Type 1
+                label(for="type").col-sm-1.col-form-label Type
                 .col-sm-5 
-                    select#type1.form-control
-                        +type_options
-                label(for="type2").col-sm-1.col-form-label Type 2
-                .col-sm-5 
-                    select#type2.form-control
+                    select#type.form-control
                         +type_options
             .ml-1.mb-3.row.pt-4
                 p.text-muted Specify lower bounds for each stat
             .ml-1.mb-3.row.py-1.align-items-center
-                +stat_input("HP")
-                +stat_input("Speed")
+                +stat_input("Power")
+                +stat_input("Accuracy")
             .ml-1.mb-3.row.py-1.align-items-center
-                +stat_input("Attack")
-                +stat_input("Defense")
-            .ml-1.mb-3.row.align-items-center
-                +stat_input("Sp-Attack")
-                +stat_input("Sp-Defense")
+                +stat_input("PP")
+                +stat_input("Damage-Type")
             .ml-1.mb-3.row.pt-4
                 button#search.btn.btn-primary Search
         #results.container(style="display:none")

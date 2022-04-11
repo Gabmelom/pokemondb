@@ -1,0 +1,6 @@
+.row.d-flex.p-1.p-md-2.m-md-3.text-center
+    - let i;
+    - for (i=0; i<results.length; i++)
+        .col-sm-4.py-3
+            a(href='/moves/'+results[i].move_id).text-capitalize #{results[i].move_name}
+                img(src=`/images/move-icons/tm-${results[i].type}.png`, alt="")

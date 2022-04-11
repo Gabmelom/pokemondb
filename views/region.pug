@@ -1,0 +1,29 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{region} Region
+        include ./partials/bootstrap-style
+    body 
+        include ./partials/header
+        .container 
+            .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
+                h1.display-4.fw-normal Explore the #{region} Region
+            .ml-1.mb-3.row.d-flex.flex-column.justify-content-center.align-items-center
+                h3.text-primary #{region} Locations
+                p.text-muted (Click on a location to see possible Pokémon encounters)
+            .ml-1.mb-3.row
+                .col-sm-4.text-center
+                    - let i;
+                    - for (i=0; i<locations.length/3; i++)
+                        h5.font-weight-light.text-capitalize.py-2
+                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name} 
+                .col-sm-4.text-center
+                    - for (i=i; i<2*locations.length/3; i++)
+                        h5.font-weight-light.text-capitalize.py-2
+                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name} 
+                .col-sm-4.text-center
+                    - for (i=i; i<locations.length; i++)
+                        h5.font-weight-light.text-capitalize.py-2
+                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name} 
