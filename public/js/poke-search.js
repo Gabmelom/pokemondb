@@ -1,5 +1,5 @@
 document.body.onload = () =>{
-    document.getElementById("search").addEventListener('click',pokeSearch)
+    document.getElementById("search").addEventListener('click',pokeSearch);
 }
 
 function pokeSearch(event){
@@ -12,6 +12,7 @@ function pokeSearch(event){
         const value = document.getElementById(field).value;
         if(value) query[field] = value;
     }
+    query.shiny = document.getElementById("shiny").checked
     for (const [key,value] of Object.entries(query)){
         if (!queryString) queryString += "?"
         queryString += `${key}=${value}&`

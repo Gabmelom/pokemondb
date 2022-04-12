@@ -1,0 +1,63 @@
+- const nameCaps = (move.move_name.charAt(0).toUpperCase() + move.move_name.slice(1)).replaceAll('-',' ')
+- const sprites = {'egg':'mystery-egg.png','machine':'tm-case.png','tutor':'heart-scale.png','level-up':'rare-candy.png','stadium-surfing-pikachu':'pikashunium-z--bag.png','light-ball-egg':'light-ball.png','form-change':'griseous-orb.png','zygarde-cube':'zygarde-cube.png'} 
+mixin moveset_row(pk)
+    tr
+        th.align-middle(scope="row").text-capitalize
+            a(href=`/pokemon/${pk.pokemon_id}`) #{pk.pokemon_name} 
+        td.align-middle #{pk.level}
+        td.align-middle.text-capitalize #{pk.method}
+        td.align-middle
+            img(src=`/images/misc/${sprites[pk.method]}` alt="")
+
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{nameCaps}
+        include ./partials/bootstrap-style
+    body 
+        include ./partials/header
+        .container 
+            .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
+                h1.display-4.fw-normal Move Information Page
+            .my-3.row.d-flex.flex-column.justify-content-center.align-items-center
+                h1.font-weight-light.fw-light.text-primary.text-capitalize #{nameCaps}
+            .py-5.row.justify-content-center
+                .col-sm-4.text-center.flex-column
+                    .d-flex.flex-row.justify-content-center.py-3
+                        .text-center.p-3
+                            img.d-inline-block(src=`/images/type-icons/${move.type}.png` alt="" height="64px" width="64px")
+                            p.text-muted.py-2 #{move.type.charAt(0).toUpperCase() + move.type.slice(1)}
+                .col-sm-4
+                    .col.justify-content-center
+                        h3.font-weight-light.text-center Stats
+                        div
+                            .d-flex.justify-content-between.py-2
+                                a Power: 
+                                a #{move.power}
+                            .d-flex.justify-content-between.py-2
+                                a Accuracy: 
+                                a #{move.accuracy}
+                            .d-flex.justify-content-between.py-2
+                                a PP: 
+                                a #{move.pp}
+                            .d-flex.justify-content-between.py-2
+                                a Damage type: 
+                                a #{move.damage_type.charAt(0).toUpperCase()+move.damage_type.slice(1)}
+            if pokemon.length > 0
+                .mb-3.row.justify-content-center.text-center
+                    .col-8
+                        h3.text-secondary The following Pokémon can learn #{nameCaps}
+                .mb-3.row.justify-content-center
+                    .col-8
+                        table.table.table-hover
+                            thead.thead-light
+                                tr
+                                    th(scope="col") Pokémon
+                                    th(scope="col") Level
+                                    th(scope="col") Method
+                                    th(scope="col") Sprite
+                            tbody
+                                each p in pokemon
+                                    +moveset_row(p)

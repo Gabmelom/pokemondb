@@ -2,7 +2,6 @@ nav.navbar.navbar-expand-lg.bg-dark.navbar-dark
     .container
         a.navbar-brand(href="/")
             i.bi.bi-house-fill.mx-2
-            span.font-weight-bold Home
         button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
             span.navbar-toggler-icon
 
@@ -10,8 +9,11 @@ nav.navbar.navbar-expand-lg.bg-dark.navbar-dark
             ul.navbar-nav.ms-auto
                 li.nav-item
                     a.nav-link(href="/regions") Regions
+                        img.ml-1(src="/images/misc/town-map.png" width="30" height="30" alt="")
                 li.nav-item
                     a.nav-link(href="/poke-search") Pokémon
+                        img(src="/images/misc/pokeball.png" width="30" height="30" alt="")
                 li.nav-item
                     a.nav-link(href="/move-search") Moves
+                        img.ml-1(src="/images/misc/tm-case.png" width="30" height="30" alt="")
 include ./bootstrap-js

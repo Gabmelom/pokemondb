@@ -17,6 +17,7 @@ app.get('/', (_,res) =>{ res.render('index') });
 app.get('/poke-search', (_,res) =>{ res.render('poke-search') });
 app.get('/move-search', (_,res) =>{ res.render('move-search') });
 
+// -------------------- ROUTES RELATED TO POKEMON --------------------
 app.get('/pokemon', (req,res) =>{
     if(req.query){
         let binding = {
@@ -43,37 +44,62 @@ app.get('/pokemon', (req,res) =>{
         INTERSECT SELECT pokemon_id FROM pokemon_types WHERE type LIKE :type2
         INTERSECT SELECT pokemon_id FROM pokemon WHERE pokemon_name LIKE :name)`);
         const pokemon = query.all(binding);
-        return res.render(path.join("partials","poke-search-results"),{results:pokemon});
+        return res.render(path.join("partials","poke-search-results"),{results:pokemon, shiny:req.query.shiny});
     }
     const query = db.prepare('SELECT * FROM pokemon');
     const pokemon = query.all();
-    res.render(path.join("partials","poke-search-results"),{results:pokemon});
+    res.render(path.join("partials","poke-search-results"),{results:pokemon, shiny:req.query.shiny});
 });
 
 app.get('/pokemon/:id', (req,res) =>{
-    const query = db.prepare('SELECT * FROM pokemon WHERE pokemon_id=?');
-    const pokemon = query.get(req.params.id);
-    res.send(pokemon);
+    // Quite a few queries here, might want to change the amount of data presented in this page?
+    const query1 = db.prepare('SELECT type FROM pokemon NATURAL JOIN pokemon_types WHERE pokemon_id=?');
+    const query2 = db.prepare('SELECT pokemon_name,stat_name,base_stat FROM pokemon NATURAL JOIN pokemon_stats WHERE pokemon_id=?');
+    const query3 = db.prepare('SELECT region_name,location_name,subarea_name,min_level,max_level FROM encounters NATURAL JOIN locations WHERE pokemon_id=?');
+    const query4 = db.prepare('SELECT move_id,move_name,type,level,method FROM pokemon_moves NATURAL JOIN moves WHERE pokemon_id=?')
+    const types = query1.all(req.params.id);
+    if (types.length == 0) return res.render('error',{error:404,message:'Not found'});
+    const stats = query2.all(req.params.id);
+    const encounters = query3.all(req.params.id);
+    const moves = query4.all(req.params.id);
+    res.render('pokemon',{name:stats[0].pokemon_name,id:req.params.id,types:types, stats:stats, encounters:encounters, moves:moves});
 });
 
-app.get('/pokemon/:id/stats', (req,res) =>{
-    const query = db.prepare('SELECT stat_name,base_stat FROM pokemon NATURAL JOIN pokemon_stats WHERE pokemon_id=?');
-    const pokemon = query.all(req.params.id);
-    res.send(pokemon);
-});
-
+// -------------------- ROUTES RELATED TO MOVES --------------------
 app.get('/moves', (req,res) =>{
-    // if(req.query){
-        
-    //     const query = db.prepare('')
-    //     const moves = query.all(binding);
-    //     return res.render(path.join("partials","move-search-results"),{results:moves});
-    // }
+    if(req.query){
+        let binding = {
+            name: req.query.name? `%${req.query.name}%`:'%',
+            type: req.query.type? req.query.type:'%',
+            power: req.query.power? req.query.power:1,
+            accuracy: req.query.accuracy? req.query.accuracy:1,
+            pp: req.query.pp? req.query.pp:1,
+            damage_type: req.query.damage_type?req.query.damage_type:'%'
+        }
+        const query = db.prepare(`SELECT * FROM moves 
+            WHERE move_name LIKE :name
+                AND type LIKE :type
+                AND power >= :power
+                AND accuracy >= :accuracy
+                AND pp >= :pp
+                AND damage_type LIKE :damage_type`);
+        const moves = query.all(binding);
+        return res.render(path.join("partials","move-search-results"),{results:moves});
+    }
     const query = db.prepare('SELECT * FROM moves');
     const moves = query.all();
-    return res.render(path.join("partials","move-search-results"),{results:moves});
+    res.render(path.join("partials","move-search-results"),{results:moves});
+});
+app.get('/moves/:id', (req,res) =>{
+    const query1 = db.prepare('SELECT * FROM moves WHERE move_id=?');
+    const query2 = db.prepare('SELECT pokemon_id,pokemon_name,level,method FROM pokemon_moves NATURAL JOIN pokemon WHERE move_id=?');
+    const move = query1.get(req.params.id);
+    if(!move) return res.render('error',{error:404,message:'Not found'});
+    const pokemon = query2.all(req.params.id)
+    res.render("move",{move:move, pokemon:pokemon});
 });
 
+// -------------------- ROUTES RELATED TO LOCATIONS --------------------
 app.get('/regions', (_,res) =>{
     const query = db.prepare('SELECT * FROM regions');
     const regions = query.all();
@@ -83,6 +109,7 @@ app.get('/regions', (_,res) =>{
 app.get('/regions/:name', (req,res) =>{
     const query = db.prepare('SELECT * FROM locations WHERE region_name=?');
     const locations = query.all(req.params.name);
+    if(!locations) return res.render('error',{error:404,message:'Not found'});
     res.render('region', {region:req.params.name.charAt(0).toUpperCase() + req.params.name.slice(1), locations:locations});
 });
 

@@ -1,12 +1,12 @@
 mixin type_options
     option(value="") -
     each t in ['normal',"fighting","flying","poison","ground","rock","bug","ghost","steel","fire","water","grass","electric","psychic","ice","dragon","dark","fairy","unknown","shadow"]
-        option(value=t) #{t}
+        option(value=t) #{t.charAt(0).toUpperCase() +t.slice(1)}
 
 mixin stat_input(name)
     label(for=name.toLowerCase()).col-sm-1.col-form-label #{name}
     .col-sm-5 
-        input(type="number" min="1" max="255" value="1" id=name.toLowerCase()).form-control
+        input(type="number" min="1" max="100" value="1" id=name.toLowerCase()).form-control
 
 html(lang="en")
     head
@@ -38,7 +38,13 @@ html(lang="en")
                 +stat_input("Accuracy")
             .ml-1.mb-3.row.py-1.align-items-center
                 +stat_input("PP")
-                +stat_input("Damage-Type")
+                label(for="damage_type").col-sm-1.col-form-label Damage Type
+                .col-sm-5 
+                    select#damage_type.form-control
+                        option(value="") -
+                        option(value="physical") Physical
+                        option(value="special") Special
+                        option(value="status") Status
             .ml-1.mb-3.row.pt-4
                 button#search.btn.btn-primary Search
         #results.container(style="display:none")

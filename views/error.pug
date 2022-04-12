@@ -1,0 +1,12 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Error
+        include ./partials/bootstrap-style
+    body 
+        include ./partials/header
+        .container
+            .position-relative.overflow-hidden.p-3.p-md-5.m-md-3.text-center
+                h1.display-4.fw-normal #{error} #{message}

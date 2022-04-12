@@ -1,7 +1,7 @@
 mixin type_options
     option(value="") -
     each t in ['normal',"fighting","flying","poison","ground","rock","bug","ghost","steel","fire","water","grass","electric","psychic","ice","dragon","dark","fairy","unknown","shadow"]
-        option(value=t) #{t}
+        option(value=t) #{t.charAt(0).toUpperCase() +t.slice(1)}
 
 mixin stat_input(name)
     label(for=name.toLowerCase()).col-sm-1.col-form-label #{name}
@@ -47,6 +47,10 @@ html(lang="en")
             .ml-1.mb-3.row.align-items-center
                 +stat_input("Sp-Attack")
                 +stat_input("Sp-Defense")
+            .ml-1.mb-3.row.py-1.align-items-center
+                .custom-control.custom-switch
+                    input(type="checkbox" name="shiny" id="shiny").custom-control-input
+                    label(for="shiny").custom-control-label Shiny sprites
             .ml-1.mb-3.row.pt-4
                 button#search.btn.btn-primary Search
         #results.container(style="display:none")

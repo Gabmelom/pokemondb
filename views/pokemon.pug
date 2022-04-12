@@ -1,0 +1,87 @@
+- const sprites = {'egg':'mystery-egg.png','machine':'tm-case.png','tutor':'heart-scale.png','level-up':'rare-candy.png','stadium-surfing-pikachu':'pikashunium-z--bag.png','light-ball-egg':'light-ball.png','form-change':'griseous-orb.png','zygarde-cube':'zygarde-cube.png'} 
+mixin moveset_row(m)
+    tr
+        th.align-middle(scope="row").text-capitalize
+            a(href=`/moves/${m.move_id}`) #{m.move_name.replaceAll('-',' ')} 
+        td.align-middle.text-capitalize #{m.type}
+        td.align-middle #{m.level}
+        td.align-middle.text-capitalize #{m.method}
+        td.align-middle
+            img(src=`/images/misc/${sprites[m.method]}` alt="")
+mixin encounter_row(obj)
+    tr
+        th.align-middle(scope="row").text-capitalize 
+            a(href=`/regions/${obj.region_name}`) #{obj.region_name}
+        td.align-middle.text-capitalize #{obj.location_name.replaceAll('-',' ')}
+        td.align-middle.text-capitalize #{obj.subarea_name?obj.subarea_name.replaceAll('-',' '):"Overworld"}
+        td.align-middle #{obj.min_level}
+        td.align-middle #{obj.max_level}
+
+- let nameCaps = name.charAt(0).toUpperCase()+name.slice(1)
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{nameCaps}
+        include ./partials/bootstrap-style
+    body 
+        include ./partials/header
+        .container 
+            .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
+                h1.display-4.fw-normal Pokémon Information Page
+            .my-3.row.d-flex.flex-column.justify-content-center.align-items-center
+                h1.font-weight-light.fw-light.text-primary #{nameCaps}
+            .py-5.row.justify-content-center
+                .col-sm-4.text-center.flex-column
+                    img.img-fluid(src=`/images/sugimori/${name}.png`)
+                    .d-flex.flex-row.justify-content-center.py-3
+                        .text-center.p-3
+                            img.d-inline-block(src=`/images/type-icons/${types[0].type}.png` alt="" height="64px" width="64px")
+                            p.text-muted.py-2 #{types[0].type.charAt(0).toUpperCase() + types[0].type.slice(1)}
+                        if types.length > 1
+                            .text-center.p-3
+                                img.d-inline-block(src=`/images/type-icons/${types[1].type}.png` alt="" height="64px" width="64px")
+                                p.text-muted.py-2 #{types[0].type.charAt(0).toUpperCase() + types[0].type.slice(1)}
+                .col-sm-4
+                    .col.justify-content-center
+                        h3.font-weight-light.text-center Stats
+                        div
+                            each s in stats
+                                .d-flex.justify-content-between.py-2
+                                    a #{s.stat_name.charAt(0).toUpperCase() + s.stat_name.slice(1)}: 
+                                    a #{s.base_stat}
+            if encounters.length > 0
+                .mb-3.row
+                    h3.text-secondary #{nameCaps} can be found at the following locations
+                .mb-3.row
+                    table.table.table-hover
+                        thead.thead-light
+                            tr
+                                th(scope="col") Region
+                                th(scope="col") Location
+                                th(scope="col") Subarea
+                                th(scope="col") Min level
+                                th(scope="col") Max level
+                        tbody
+                            each e in encounters
+                                +encounter_row(e)
+            else 
+                .mb-3.row.justify-content-center.text-center
+                    h3.text-secondary #{nameCaps} cannot be found in the wild
+
+            if moves.length > 0
+                .pt-3.mb-3.row
+                    h3.text-secondary #{nameCaps} moveset
+                .mb-3.row
+                    table.table.table-hover
+                        thead.thead-light
+                            tr
+                                th(scope="col") Move
+                                th(scope="col") Type
+                                th(scope="col") Level
+                                th(scope="col") Method
+                                th(scope="col") Sprite
+                        tbody
+                            each m in moves
+                                +moveset_row(m)

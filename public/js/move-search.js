@@ -5,7 +5,7 @@ document.body.onload = () =>{
 function moveSearch(event){
     event.stopPropagation();
     // Build query string
-    const fields = ["name","type","power","accuracy","pp","damage-type"];
+    const fields = ["name","type","power","accuracy","pp","damage_type"];
     let query = {};
     let queryString = "";
     for (let field of fields){

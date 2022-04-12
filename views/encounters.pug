@@ -1,12 +1,12 @@
 mixin encounter_row(obj)
-    tr 
-        th(scope="row").text-capitalize 
+    tr
+        th.align-middle(scope="row").text-capitalize 
             a(href=`/pokemon/${obj.pokemon_id}`) #{obj.pokemon_name}
-        td #{obj.min_level}
-        td #{obj.max_level}
-        td.text-capitalize #{obj.subarea_name?obj.subarea_name:"Overworld"}
-        td
-            img(src=`/images/poke-icons/${obj.pokemon_id}.png`)
+        td.align-middle #{obj.min_level}
+        td.align-middle #{obj.max_level}
+        td.align-middle.text-capitalize #{obj.subarea_name?obj.subarea_name:"Overworld"}
+        td.align-middle
+            img(src=`/images/poke-icons/${obj.pokemon_name}.png`)
 
 html(lang="en")
     head
@@ -22,7 +22,7 @@ html(lang="en")
                 h1.display-4.fw-normal Pokémon encounters
             .ml-1.mb-3.row.justify-content-center
                 if encounters.length > 0
-                    h3.text-secondary.text-capitalize #{encounters[0].location_name}
+                    h3.text-secondary.text-capitalize #{encounters[0].location_name.replaceAll('-',' ')}
                 else 
                     h3.text-secondary.text-capitalize There are no encounters for this area
             .row-12

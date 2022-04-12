@@ -18,12 +18,12 @@ html(lang="en")
                     - let i;
                     - for (i=0; i<locations.length/3; i++)
                         h5.font-weight-light.text-capitalize.py-2
-                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name} 
+                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name.replaceAll('-',' ')} 
                 .col-sm-4.text-center
                     - for (i=i; i<2*locations.length/3; i++)
                         h5.font-weight-light.text-capitalize.py-2
-                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name} 
+                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name.replaceAll('-',' ')} 
                 .col-sm-4.text-center
                     - for (i=i; i<locations.length; i++)
                         h5.font-weight-light.text-capitalize.py-2
-                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name} 
+                            a.text-dark(href=`/locations/${locations[i].location_id}/encounters`) #{locations[i].location_name.replaceAll('-',' ')} 

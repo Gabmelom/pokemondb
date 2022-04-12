@@ -1,3 +1,7 @@
+mixin images(names)
+    for n in names
+        img.mt-0(src=`/images/poke-icons/${n}.png`)
+
 html(lang="en")
     head
         meta(charset="UTF-8")
@@ -11,31 +15,26 @@ html(lang="en")
             .position-relative.overflow-hidden.p-1.p-md-2.m-md-3.text-center
                 h1.display-4.fw-normal Explore the Pokémon Regions
             each r in regions
+                hr.mb-1
                 .row.justify-content-center
-                    .col-sm-6.d-flex.flex-wrap.align-items-center.justify-content-center
-                        h3.font-weight-light.text-capitalize.py-2.d-inline-block
+                    .col-sm-6.d-flex.flex-wrap.align-items-center.justify-content-center.flex-column
+                        div
+                            - if(r.region_name == "kanto")
+                                +images(['bulbasaur','charmander','squirtle'])
+                            - if(r.region_name == "johto")
+                                +images(['chikorita','cyndaquil','totodile'])
+                            - if(r.region_name == "hoenn")
+                                +images(['treecko','torchic','mudkip'])
+                            - if(r.region_name == "sinnoh")
+                                +images(['turtwig','chimchar','piplup'])
+                            - if(r.region_name == "unova")
+                                +images(['snivy','tepig','oshawott'])
+                            - if(r.region_name == "kalos")
+                                +images(['chespin','fennekin','froakie'])
+                            - if(r.region_name == "alola")
+                                +images(['rowlet','litten','popplio'])
+                            - if(r.region_name == "galar")
+                                +images(['grookey','scorbunny','sobble'])
+                        h3.font-weight-light.text-capitalize.m-0.pt-1
                             a(href=`/regions/${r.region_name}`) #{r.region_name}
-                        - if(r.region_name == "kanto")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/1.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/4.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/7.png")
-                        - if(r.region_name == "johto")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/152.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/155.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/158.png")
-                        - if(r.region_name == "hoenn")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/252.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/255.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/258.png")
-                        - if(r.region_name == "sinnoh")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/387.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/390.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/393.png")
-                        - if(r.region_name == "unova")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/495.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/498.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/501.png")
-                        - if(r.region_name == "kalos")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/650.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/653.png")
-                            img.pb-3.d-inline-block(src="/images/poke-icons/656.png")
+            hr.mb-5

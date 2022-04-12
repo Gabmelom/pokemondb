@@ -2,5 +2,8 @@
     - let i;
     - for (i=0; i<results.length; i++)
         .col-sm-4.py-3
-            a(href='/moves/'+results[i].move_id).text-capitalize #{results[i].move_name}
+            a(href='/moves/'+results[i].move_id).text-capitalize #{results[i].move_name.replaceAll('-',' ')}
                 img(src=`/images/move-icons/tm-${results[i].type}.png`, alt="")
+    if results.length == 0
+        .col-sm-4.py-3
+            p No matching results found :(
